@@ -13,9 +13,9 @@ function adicionarFuncionario(id, nome, cargo, taxaHoraria){
 }
 
 function registrarHoras(idFuncionario, numHoras){
-    listaFuncionarios.map((func) => {
-        if (func.id == idFuncionario){
-            func.horasTrabalhadas.push(numHoras)
+    listaFuncionarios.map((funcionario) => {
+        if (funcionario.id == idFuncionario){
+            funcionario.horasTrabalhadas.push(numHoras)
         }
     })
 }
@@ -54,27 +54,48 @@ function calcularInss(funcionario){
 function gerarRelatorioPagamento(){
     console.log("-------- RELATÓRIO DE PAGAMENTOS -------- \n")
 
-    let totalHoras = 0
-    func.horasTrabalhadas.map((hora) => {
 
-    })
 
-    listaFuncionarios.map((func) => {
-        console.log(`Nome: ${func.nome}`)
-        console.log(`Cargo: ${func.cargo}`)
-        console.log(`Total de horas trabalhadas: ${func.horasTrabalhadas}`)
-        console.log(`Total de horas trabalhadas: ${func.calcularSalarioMensal}`)
+
+    listaFuncionarios.map((funcionario) => {
+
+        let totalHoras = 0
+        funcionario.horasTrabalhadas.map((hora) => {
+            totalHoras += hora
+        })
+
+        let salarioBruto = calcularSalarioMensal(funcionario)
+        let inss = calcularInss(funcionario)
+        console.log("-------- FUNCIONÁRIO -------- ")
+        console.log(`Nome: ${funcionario.nome}`)
+        console.log(`Cargo: ${funcionario.cargo}`)
+        console.log(`Total de horas trabalhadas: R$${totalHoras}`)
+        console.log(`Valor do INSS: R$${inss.toFixed(2)}`)
+        console.log(`Salário bruto: R$${salarioBruto.toFixed(2)}`)
+        console.log(`Salário líquido: R$${(salarioBruto - inss.toFixed(2))}`)
+        console.log("----------------------------- \n")
     })
 }
 
 adicionarFuncionario(1, "Bruno", "Professor", 10)
 registrarHoras(1, 8)
 registrarHoras(1, 6)
-console.log(listaFuncionarios)
 
-let total = calcularSalarioMensal(listaFuncionarios[0])
-let inss = calcularInss(listaFuncionarios[0])
+adicionarFuncionario(2, "Leonardo", "Desenvolvedor", 60)
+registrarHoras(2, 8)
+registrarHoras(2, 6)
 
-console.log(`Total do salário bruto: ${total}`)
-console.log(`Total do INSS: ${inss}`)
+adicionarFuncionario(3, "João", "QA", 25)
+registrarHoras(3, 8)
+registrarHoras(3, 6)
+
+// console.log(listaFuncionarios)
+
+// let total = calcularSalarioMensal(listaFuncionarios[0])
+// let inss = calcularInss(listaFuncionarios[0])
+
+// console.log(`Total do salário bruto: ${total}`)
+// console.log(`Total do INSS: ${inss}`)
+
+gerarRelatorioPagamento()
 
